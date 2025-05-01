@@ -6,7 +6,7 @@ import { useState, useEffect } from "react"
 import Link from "next/link"
 import { useRouter, useSearchParams } from "next/navigation"
 
-// User type definition
+
 interface User {
   id: string
   firstName: string
@@ -23,7 +23,7 @@ export default function Home() {
   const router = useRouter()
   const searchParams = useSearchParams()
 
-  // Load users from localStorage on component mount - only runs once
+ 
   useEffect(() => {
     const storedUsers = localStorage.getItem("users")
     if (storedUsers) {
@@ -31,7 +31,7 @@ export default function Home() {
     }
   }, [])
 
-  // Handle search query from URL - runs when searchParams changes
+  
   useEffect(() => {
     const query = searchParams.get("search")
     if (query) {
@@ -39,7 +39,7 @@ export default function Home() {
     }
   }, [searchParams])
 
-  // Handle search input changes
+
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value
     setSearchTerm(value)
@@ -50,26 +50,26 @@ export default function Home() {
       return
     }
 
-    // Filter users based on email
+    
     const filteredUsers = users.filter((user) => user.email.toLowerCase().includes(value.toLowerCase()))
 
     setSuggestions(filteredUsers)
     setShowSuggestions(true)
   }
 
-  // Select a suggestion
+  
   const selectSuggestion = (user: User) => {
     setSearchTerm(user.email)
     setSuggestions([])
     setShowSuggestions(false)
 
-    // Only update URL if the search term is different
+    
     if (searchParams.get("search") !== user.email) {
       router.push(`/?search=${encodeURIComponent(user.email)}`)
     }
   }
 
-  // Filter users based on search term
+ 
   const filteredUsers =
     searchTerm.trim() === ""
       ? users
@@ -80,7 +80,7 @@ export default function Home() {
       <div className="max-w-4xl mx-auto">
         <h1 className="text-3xl font-bold mb-6">User Management</h1>
 
-        {/* Search and Add User Section */}
+       
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4">
           <div className="relative w-full md:w-64">
             <input
@@ -93,7 +93,7 @@ export default function Home() {
               onFocus={() => searchTerm && setSuggestions.length > 0 && setShowSuggestions(true)}
             />
 
-            {/* Autocomplete suggestions */}
+          
             {showSuggestions && suggestions.length > 0 && (
               <div className="absolute z-10 w-full mt-1 bg-white border rounded-md shadow-lg">
                 {suggestions.map((user) => (
@@ -120,7 +120,7 @@ export default function Home() {
           </Link>
         </div>
 
-        {/* User List */}
+        
         <div className="bg-white rounded-lg shadow overflow-hidden">
           <table className="min-w-full divide-y divide-gray-200">
             <thead className="bg-gray-50">

@@ -20,7 +20,7 @@ export default function EditUser({ params }: { params: { id: string } }) {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    // Get user data from localStorage
+   
     const storedUsers = localStorage.getItem("users")
     if (storedUsers) {
       const users: User[] = JSON.parse(storedUsers)
@@ -41,11 +41,11 @@ export default function EditUser({ params }: { params: { id: string } }) {
   const handleSubmit = (userData: Omit<User, "id">) => {
     if (!user) return false
 
-    // Get existing users from localStorage
+   
     const storedUsers = localStorage.getItem("users")
     const users: User[] = storedUsers ? JSON.parse(storedUsers) : []
 
-    // Check for duplicate email (excluding the current user)
+   
     const isDuplicate = users.some((u) => u.id !== user.id && u.email.toLowerCase() === userData.email.toLowerCase())
 
     if (isDuplicate) {
@@ -53,13 +53,12 @@ export default function EditUser({ params }: { params: { id: string } }) {
       return false
     }
 
-    // Update user data
+    
     const updatedUsers = users.map((u) => (u.id === user.id ? { ...userData, id: user.id } : u))
 
-    // Save to localStorage
     localStorage.setItem("users", JSON.stringify(updatedUsers))
 
-    // Navigate back to home page
+   
     router.push("/")
     return true
   }

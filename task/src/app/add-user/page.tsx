@@ -4,7 +4,7 @@ import { useState } from "react"
 import { useRouter } from "next/navigation"
 import UserForm from "@/components/UserForm"
 
-// User type definition
+
 interface User {
   id: string
   firstName: string
@@ -18,11 +18,11 @@ export default function AddUser() {
   const [error, setError] = useState("")
 
   const handleSubmit = (userData: Omit<User, "id">) => {
-    // Get existing users from localStorage
+    
     const storedUsers = localStorage.getItem("users")
     const users: User[] = storedUsers ? JSON.parse(storedUsers) : []
 
-    // Check for duplicate email
+ 
     const isDuplicate = users.some((user) => user.email.toLowerCase() === userData.email.toLowerCase())
 
     if (isDuplicate) {
@@ -30,19 +30,19 @@ export default function AddUser() {
       return false
     }
 
-    // Create new user with unique ID
+    
     const newUser: User = {
       ...userData,
       id: Date.now().toString(),
     }
 
-    // Add new user to the list
+   
     const updatedUsers = [...users, newUser]
 
-    // Save to localStorage
+   
     localStorage.setItem("users", JSON.stringify(updatedUsers))
 
-    // Navigate back to home page
+    
     router.push("/")
     return true
   }
